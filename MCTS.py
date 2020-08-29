@@ -37,10 +37,8 @@ class MCTS():
         for i in range(self.args.numMCTSSims):
             self.search(canonicalBoard)
 
-        s = self.game.stringRepresentation(self.game.vectorize_board(canonicalBoard))
-        for a in range(self.game.getActionSize()):
-            if (s, a) in self.Nsa:
-                print("True")
+        s = self.game.stringRepresentation(canonicalBoard)
+
         counts = [self.Nsa[(s, a)] if (s, a) in self.Nsa else 0 for a in range(self.game.getActionSize())]
 
         if temp == 0:
@@ -79,7 +77,7 @@ class MCTS():
             v: the negative of the value of the current canonicalBoard
         """
 
-        s = self.game.stringRepresentation(self.game.vectorize_board(canonicalBoard))
+        s = self.game.stringRepresentation(canonicalBoard)
 
         if s not in self.Es:
             self.Es[s] = self.game.getGameEnded(canonicalBoard, 1)
@@ -134,7 +132,6 @@ class MCTS():
         if (s, a) in self.Qsa:
             self.Qsa[(s, a)] = (self.Nsa[(s, a)] * self.Qsa[(s, a)] + v) / (self.Nsa[(s, a)] + 1)
             self.Nsa[(s, a)] += 1
-            print(s, a)
 
         else:
             self.Qsa[(s, a)] = v

@@ -33,6 +33,7 @@ class NNetWrapper():
         self.nnet.model.summary()
         self.board_x, self.board_y = game.getBoardSize()
         self.action_size = game.getActionSize()
+        self.game = game
 
     def train(self, examples):
         """
@@ -50,7 +51,7 @@ class NNetWrapper():
         """
         # timing
         start = time.time()
-
+        #board = self.game.vectorize_board(board)
         # preparing input
         board = board[np.newaxis, :, :]
 

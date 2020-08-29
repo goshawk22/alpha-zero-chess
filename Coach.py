@@ -54,7 +54,6 @@ class Coach():
             episodeStep += 1
             canonicalBoard = board
             temp = int(episodeStep < self.args.tempThreshold)
-            temp=0
 
             pi = self.mcts.getActionProb(canonicalBoard, temp=temp)
             trainExamples.append([canonicalBoard, self.curPlayer, pi, None])

@@ -42,6 +42,11 @@ class ChessGame():
     def getNextState(self, board, player, action):
         #print(self.getValidMoves(board, player)[action])
         #assert self.getValidMoves(board, player)[action] == 1
+
+        # Copy board to new board
+        b = chess.Board()
+        b = board.copy()
+
         origin = np.where(self.VALIDS_INDEX == action)[0][0]
         destination = np.where(self.VALIDS_INDEX == action)[1][0]
 
@@ -50,14 +55,8 @@ class ChessGame():
 
         move = "".join([origin_name, destination_name])
         #print(move)
-        try:
-            is_promotion = (board.piece_at(origin).piece_type == chess.PAWN and chess.square_rank(destination) in [0, 7])
-        except AttributeError:
-            print(action)
-            print(board)
-            print(move)
-            #assert 5==1
-            is_promotion = False
+        is_promotion = (b.piece_at(origin).piece_type == chess.PAWN and chess.square_rank(destination) in [0, 7])
+
         
         if is_promotion:
             move = str(move + 'q')
@@ -66,9 +65,9 @@ class ChessGame():
 
         #print(move)
         #print(list(board.legal_moves))
-        board.push(move)
+        b.push(move)
 
-        return (board.mirror(), -player)
+        return (b.mirror(), -player)
 
     def getValidMoves(self, board, player):
         valids = np.zeros(self.getActionSize())
@@ -88,7 +87,7 @@ class ChessGame():
         # return 0 if not ended, 1 if player 1 won, -1 if player 1 lost
         
         result = board.result()
-        print(result)
+        #print(result)
         result = result.split("-")
 
         if result[0] == "1":
@@ -117,8 +116,11 @@ class ChessGame():
     
     def stringRepresentation(self, board):
         # 8x8 numpy array (canonical board)
-        return board.tostring()
+        return board.fen()
     
     @staticmethod
     def display(board):
         print(board)
+
+
+        copy
