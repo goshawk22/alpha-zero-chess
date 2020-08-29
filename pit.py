@@ -46,8 +46,8 @@ else:
 
     player2 = n2p  # Player 2 is neural network if it's cpu vs cpu.
 '''
-player1 = rp
-player2 = rp
+player1 = hp
+player2 = hp
 arena = Arena.Arena(player1, player2, g, display=ChessGame.display)
 
 print(arena.playGames(2, verbose=True))

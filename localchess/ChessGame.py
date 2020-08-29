@@ -25,6 +25,7 @@ class ChessGame():
             for p in range(1, 7):
                 pos_stack[list(board.pieces(p, color)), a] = 1
                 a += 1
+
         return pos_stack
     
     def uci_to_action(self, uci):
@@ -49,7 +50,14 @@ class ChessGame():
 
         move = "".join([origin_name, destination_name])
         #print(move)
-        is_promotion = (board.piece_at(origin).piece_type == chess.PAWN and chess.square_rank(destination) in [0, 7])
+        try:
+            is_promotion = (board.piece_at(origin).piece_type == chess.PAWN and chess.square_rank(destination) in [0, 7])
+        except AttributeError:
+            print(action)
+            print(board)
+            print(move)
+            #assert 5==1
+            is_promotion = False
         
         if is_promotion:
             move = str(move + 'q')
@@ -78,28 +86,38 @@ class ChessGame():
     
     def getGameEnded(self, board, player):
         # return 0 if not ended, 1 if player 1 won, -1 if player 1 lost
-
-        if not board.is_game_over():
-            return 0
         
         result = board.result()
+        print(result)
         result = result.split("-")
 
         if result[0] == "1":
             return 1
         
         if result[0] == "1/2":
-            return 1e-5
+            return 1e-2
         
         if result[0] == "0":
             return -1
+        
+        if board.is_variant_win():
+            return 1
+
+        if board.is_variant_loss():
+            return -1
+        
+        if board.is_variant_draw():
+            return 1e-2
+
+
+        return 0
     
     def getCanonicalForm(self, board, player):
         return board.mirror()
     
     def stringRepresentation(self, board):
         # 8x8 numpy array (canonical board)
-        return self.vectorize_board(board).tostring()
+        return board.tostring()
     
     @staticmethod
     def display(board):
