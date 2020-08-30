@@ -8,7 +8,9 @@ class ChessGame():
         self.VALIDS_INDEX = np.arange(64*64).reshape(64,64)
     
     def getInitBoard(self):
+
         b = chess.Board()
+
         return b
     
     def getBoardSize(self):
@@ -40,9 +42,6 @@ class ChessGame():
         return index
 
     def getNextState(self, board, player, action):
-        #print(self.getValidMoves(board, player)[action])
-        #assert self.getValidMoves(board, player)[action] == 1
-
         # Copy board to new board
         b = chess.Board()
         b = board.copy()
@@ -76,7 +75,6 @@ class ChessGame():
             index = self.uci_to_action(m_str)
             #print(index)
             valids[index] = 1
-
         return valids
 
 
@@ -89,6 +87,8 @@ class ChessGame():
         result = board.result()
         #print(result)
         result = result.split("-")
+        if not board.is_game_over():
+            return 0
 
         if result[0] == "1":
             return 1
@@ -105,11 +105,7 @@ class ChessGame():
         if board.is_variant_loss():
             return -1
         
-        if board.is_variant_draw():
-            return 1e-2
-
-
-        return 0
+        return 1e-5
     
     def getCanonicalForm(self, board, player):
         return board.mirror()
@@ -121,6 +117,3 @@ class ChessGame():
     @staticmethod
     def display(board):
         print(board)
-
-
-        copy
