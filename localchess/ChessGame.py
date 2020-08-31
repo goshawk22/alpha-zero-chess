@@ -43,7 +43,6 @@ class ChessGame():
 
     def getNextState(self, board, player, action):
         # Copy board to new board
-        b = chess.Board()
         b = board.copy()
 
         origin = np.where(self.VALIDS_INDEX == action)[0][0]
