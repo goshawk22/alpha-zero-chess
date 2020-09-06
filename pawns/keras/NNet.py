@@ -15,7 +15,7 @@ log = logging.getLogger(__name__)
 
 import argparse
 
-from .ChessNNet import ChessNNet as onnet
+from .PawnsNNet import PawnsNNet as onnet
 
 args = dotdict({
     'lr': 0.001,

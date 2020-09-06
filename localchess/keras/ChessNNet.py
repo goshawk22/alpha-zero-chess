@@ -59,7 +59,7 @@ def policy_head(input):
     flat = Flatten()(bn1_relu)
     return flat
 
-class Connect4NNet():
+class ChessNNet():
     def __init__(self, game, args):
         # game params
         self.board_x, self.board_y = game.getBoardSize()

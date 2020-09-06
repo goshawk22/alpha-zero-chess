@@ -3,8 +3,8 @@ import logging
 import coloredlogs
 
 from Coach import Coach
-from localchess.ChessGame import ChessGame as Game
-from localchess.keras.NNet import NNetWrapper as nn
+from pawns.PawnsGame import PawnsGame as Game
+from pawns.keras.NNet import NNetWrapper as nn
 from utils import *
 
 
