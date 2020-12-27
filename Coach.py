@@ -67,7 +67,7 @@ class Coach():
 
             if r != 0:
                 print(board)
-                return [(self.game.vectorize_board(x[0]), x[2], r * ((-1) ** (x[1] != self.curPlayer))) for x in trainExamples]
+                return [(self.game.arrayRepresentation(x[0]), x[2], r * ((-1) ** (x[1] != self.curPlayer))) for x in trainExamples]
 
     def learn(self):
         """
