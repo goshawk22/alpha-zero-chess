@@ -71,17 +71,16 @@ def policy_head(input):
 class ChessNNet():
     def __init__(self, game, args):
         # game params
-        self.board_x, self.board_y = game.getBoardSize()
         self.action_size = game.getActionSize()
         self.args = args
 
         # Neural Net
         # Inputs
-        self.input_boards = Input(shape=(20,8,8))
-        inputs = Reshape((20, 8, 8))(self.input_boards)
+        self.input_boards = Input(shape=tuple(game.getBoardSize()))
+        #inputs = Reshape((20, 8, 8))(self.input_boards)
 
 
-        bn1 = BatchNormalization()(inputs)
+        bn1 = BatchNormalization()(self.input_boards)
         conv1 = Conv2D(args.num_channels, kernel_size=3, strides=1, padding="same")(bn1)
         t = relu_bn(conv1)
 

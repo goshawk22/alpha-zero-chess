@@ -3,7 +3,7 @@ import numpy as np
 
 class ChessGame():
     def __init__(self):
-        self.game = pyspiel.load_game("chess")
+        self.game = pyspiel.load_game("tic_tac_toe")
     
     def getInitBoard(self):
 
@@ -12,11 +12,10 @@ class ChessGame():
         return b
     
     def getBoardSize(self):
-        return (8, 8)
+        return self.game.observation_tensor_shape()
     
     def getActionSize(self):
-        # 4672
-        return 4672
+        return self.game.policy_tensor_shape()[0]
 
     def getNextState(self, state, player, action):
         # Copy board to new board
@@ -41,15 +40,25 @@ class ChessGame():
             return 0
 
         rewards = state.rewards()
+        if player == 1:
+            if (rewards[0] == 1):
+                return 1
 
-        if (rewards[0] == 1):
-            return 1
+            elif (rewards[0] == 0):
+                return 1e-5
 
-        elif (rewards[0] == 0):
-            return 1e-5
+            elif (rewards[0] == -1):
+                return -1
 
-        elif (rewards[0] == -1):
-            return -1
+        if player == -1:
+            if (rewards[1] == 1):
+                return 1
+
+            elif (rewards[1] == 0):
+                return 1e-5
+
+            elif (rewards[1] == -1):
+                return -1
 
         else:
             print("Error: Result not valid")
@@ -64,5 +73,5 @@ class ChessGame():
     
     @staticmethod
     def display(state):
-        board = chess.Board(str(state))
-        print(board)
+        #board = chess.Board(str(state))
+        print(str(state))
